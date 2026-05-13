@@ -4,7 +4,240 @@
     --primary-color: rgba(7, 7, 14, 0.845);
     --primary-color-darker: rgba(255, 23, 23, 0.915);
 }                                                                                                                
-* {                              
+* {                              /* ============================================
+   IMPORTS — Inter para corpo, Playfair para título
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap');
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --color-bg:       #0f0f17;
+  --color-surface:  #ffffff;
+  --color-accent:   #c0392b;
+  --color-text:     #1a1a2e;
+  --color-muted:    #6b7280;
+  --color-border:   #e5e7eb;
+  --color-danger:   #fee2e2;
+
+  --font-body:      'Inter', sans-serif;
+  --font-heading:   'Playfair Display', serif;
+
+  --radius-card:    16px;
+  --radius-input:   8px;
+  --radius-btn:     8px;
+}
+
+/* ============================================
+   RESET SUAVE
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* CORREÇÃO: outline:0 removido — quebrava acessibilidade */
+}
+
+/* ============================================
+   BASE
+   ============================================ */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   CORREÇÃO PRINCIPAL DE CENTRALIZAÇÃO:
+   min-height: 100vh garante que o flex container
+   ocupe a tela toda — sem isso o justify/align
+   não tem espaço para centralizar nada.
+   ============================================ */
+.container {
+  display: flex;
+  align-items: center;        /* centraliza verticalmente */
+  justify-content: center;    /* centraliza horizontalmente */
+  min-height: 100vh;
+  padding: 2rem 1rem;         /* respira em telas pequenas */
+}
+
+/* ============================================
+   MELHORIA: .box agora existe no HTML.
+   Antes estava só no CSS — por isso nunca aparecia.
+   ============================================ */
+.box {
+  width: 100%;
+  max-width: 560px;           /* era width: 640px fixo */
+  background: var(--color-surface);
+  padding: 2.5rem;
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25); /* era sombra vermelha */
+}
+
+/* ============================================
+   TÍTULO
+   MELHORIA: Playfair Display — elegante, profissional
+   ============================================ */
+h1 {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 1.75rem;
+  letter-spacing: -0.4px;
+}
+
+/* ============================================
+   CAMPO DE ENTRADA
+   MELHORIA: label + input + button em coluna,
+   organizados com flex — antes estava dentro de <p>
+   ============================================ */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.campo label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ============================================
+   INPUT
+   CORREÇÃO: width 100% e altura adequada
+   MELHORIA: focus com ring visível (acessível)
+   ============================================ */
+input {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  height: 44px;
+  padding: 0 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-input);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--color-accent);
+  /* MELHORIA: ring de foco visível — antes só mudava a borda */
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.15);
+}
+
+/* ============================================
+   BOTÃO ADICIONAR
+   CORREÇÃO: font-weight era 200 (quase invisível)
+   CORREÇÃO: animação pulsando removida
+   MELHORIA: width 100%, hover com elevação sutil
+   ============================================ */
+.btn-tarefa {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-btn);
+  background: var(--color-text);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;           /* era 200 */
+  height: 44px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  /* REMOVIDO: animation: grawAndChange — pulsava sem parar */
+}
+
+.btn-tarefa:hover {
+  background: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.btn-tarefa:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   LISTA DE TAREFAS
+   MELHORIA: remove marcadores padrão do <ul>
+   ============================================ */
+.tarefa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ============================================
+   ITEM DA LISTA
+   MELHORIA: cada <li> vira uma linha organizada
+   com texto à esquerda e botão apagar à direita
+   ============================================ */
+.tarefa li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f9fafb;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  gap: 12px;
+}
+
+/* MELHORIA: texto da tarefa ocupa o espaço disponível */
+.tarefa li span {
+  flex: 1;
+}
+
+/* ============================================
+   BOTÃO APAGAR
+   MELHORIA: estilo discreto, só fica vermelho no hover
+   ============================================ */
+button.apagar {
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;             /* não encolhe quando o texto é longo */
+}
+
+button.apagar:hover {
+  background: var(--color-danger);
+  color: var(--color-accent);
+}
+
+/* ============================================
+   MENSAGEM LISTA VAZIA
+   MELHORIA: feedback visual quando não há tarefas
+   ============================================ */
+.lista-vazia {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+  /* Controlada pelo JS — aparece/some conforme a lista */
+}
     box-sizing: border-box;                                                                                                                                                                      
     outline: 0;
 
