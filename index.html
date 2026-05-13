@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLOCO DE LISTA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+</head><!-- CORREÇÃO: </head> estava faltando -->
 <body>
-    
-    <section class="container">
-        <h1>lISTA DE TAREFAS</h1>
-       
-      <p>
-        <input type="text" class="input-tarafa">
-        <button class="btn-tarefa">Adicionar nova tarefa
-        </button>
-      </p>
+
+  <!-- CORREÇÃO: .container envolve tudo -->
+  <!-- CORREÇÃO: .box adicionado — era referenciado no CSS mas não existia no HTML -->
+  <section class="container">
+    <div class="box">
+
+      <h1>Lista de Tarefas</h1>
+
+      <!-- CORREÇÃO: input e button saem do <p> — semânticamente incorreto -->
+      <!-- MELHORIA: label real para acessibilidade -->
+      <div class="campo">
+        <label for="input-tarefa">Nova tarefa</label>
+        <input 
+          type="text" 
+          id="input-tarefa"
+          class="input-tarefa"<!-- CORREÇÃO: era 'input-tarafa' (typo) -->
+          placeholder="Ex: Estudar CSS..."
+          autocomplete="off"
+        >
+        <button class="btn-tarefa">Adicionar</button>
+      </div>
+
+      <!-- MELHORIA: mensagem exibida quando lista está vazia -->
+      <p class="lista-vazia">Nenhuma tarefa ainda. Adicione uma acima!</p>
+
       <ul class="tarefa"></ul>
-      </section>
-    
-    <script src="scrip.js"></script>
+
+    </div><!-- fim .box -->
+  </section>
+
+  <script src="script.js"></script><!-- CORREÇÃO: era 'scrip.js' -->
 </body>
 </html>
